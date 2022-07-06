@@ -1,54 +1,34 @@
 import "../styles/button.css";
 import "../styles/accordion.css";
 import "../styles/icon.css";
-// import $ from "jquery";
+import $ from "jquery";
+import "../scripts/accordion.js";
 
 const Accordion = () => {
-  // ui logic
+  // Vanilla JS
+  // let titles = Array.from(document.querySelectorAll(".title"));
+  // let contents = Array.from(document.querySelectorAll(".content"));
 
-  let titles = Array.from(document.querySelectorAll(".title"));
-  let contents = Array.from(document.querySelectorAll(".content"));
-
-  // let addTitles = () => {
-  //   titles.forEach((title) => title.classList.add("active"));
+  // let hideAllTitles = () => {
+  //   titles.forEach((title) => title.classList.remove("active"));
   // };
 
-  let hideAllTitles = () => {
-    titles.forEach((title) => title.classList.remove("active"));
-  };
-
-  // let showContents = () => {
-  //   contents.forEach((content) => content.classList.add("active"));
+  // let hideAllContents = () => {
+  //   contents.forEach((content) => content.classList.remove("active"));
   // };
 
-  let hideAllContents = () => {
-    contents.forEach((content) => content.classList.remove("active"));
-  };
+  // titles.forEach((title) => {
+  //   title.addEventListener("click", () => {
+  //     let position = titles.indexOf(title);
+  //     hideAllTitles();
+  //     hideAllContents();
+  //     titles[position].classList.add("active");
+  //     contents[position].classList.add("active");
+  //   });
+  // });
 
-  titles.forEach((title) => {
-    title.addEventListener("click", () => {
-      let position = titles.indexOf(title);
-      hideAllTitles();
-      hideAllContents();
-      titles[position].classList.add("active");
-      contents[position].classList.add("active");
-
-      // console.log("ID: " + id);
-      console.log("Position: " + position);
-      // console.log("ID Clicked: " + id);
-      // hideAllTitles();
-      // hideAllContents();
-      // title.classList.add("active");
-      // console.log(contents[0]);
-      // console.log(typeof contents);
-      // let position = contents.indexOf(id);
-      // console.log(position);
-      // contents[position].classList.add("active");
-      // console.log(contents[id]);
-      // let target = document.getElementById(id);
-      // target.classList.add("active");
-    });
-  });
+  // jQuery
+  $(".ui.accordion").accordion();
 
   return (
     <>
@@ -92,10 +72,6 @@ const Accordion = () => {
             may not find one so readily.
           </p>
         </div>
-      </div>
-      <div className="ui buttons">
-        <button className="ui button">activateAllTitles</button>
-        <button className="ui button">deactivateAllTitles</button>
       </div>
     </>
   );

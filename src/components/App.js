@@ -1,19 +1,14 @@
-// import $ from "jquery";
+import $ from "jquery";
+import "../styles/semantic.css";
 import "../styles/App.css";
-import "../styles/site.css";
-import "../styles/container.css";
-import "../styles/grid.css";
+import "../scripts/semantic.js";
 
-import Form from "./Form";
-import Buttons from "./Buttons";
-import Accordion from "./Accordion";
+import Search from "./Search";
 
 function App() {
   return (
     <div className="ui container">
-      {/* <Form />
-      <Buttons /> */}
-      <Accordion />
+      <Search />
     </div>
   );
 }
