@@ -1,32 +1,36 @@
 import $ from "jquery";
-import "../styles/tab.css";
-import "../styles/menu.css";
-import "../scripts/tab.js";
 
-const Tabs = () => {
-  $(".menu .item").tab();
+const Tabs = (props) => {
+  const { first, second, third } = props;
+
+  $(document).ready(function () {
+    // $(".sidebarMenu").click(function () {
+    //   $(".ui.sidebar").sidebar("toggle");
+    // });
+    $(".menu .item").tab("toggle");
+  });
 
   return (
     <>
       <div className="ui top attached tabular menu">
         <a className="active item" data-tab="first">
-          First
+          {first.title}
         </a>
         <a className="item" data-tab="second">
-          Second
+          {second.title}
         </a>
         <a className="item" data-tab="third">
-          Third
+          {third.title}
         </a>
       </div>
       <div className="ui bottom attached active tab segment" data-tab="first">
-        First
+        {first.content}
       </div>
       <div className="ui bottom attached tab segment" data-tab="second">
-        Second
+        {second.content}
       </div>
       <div className="ui bottom attached tab segment" data-tab="third">
-        Third
+        {third.content}
       </div>
     </>
   );

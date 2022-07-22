@@ -1,26 +1,25 @@
-import "../styles/form.css";
-import "../styles/button.css";
-
+import $ from "jquery";
 const Form = () => {
+  $(".ui.checkbox").checkbox("toggle");
   return (
     <>
       <hr />
-      <form class="ui form">
-        <div class="field">
+      <form className="ui form">
+        <div className="field">
           <label>First Name</label>
           <input type="text" name="first-name" placeholder="First Name" />
         </div>
-        <div class="field">
+        <div className="field">
           <label>Last Name</label>
           <input type="text" name="last-name" placeholder="Last Name" />
         </div>
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" />
+        <div className="field">
+          <div className="ui checkbox">
+            <input type="checkbox" tabIndex="0" className="hidden" />
             <label>I agree to the Terms and Conditions</label>
           </div>
         </div>
-        <button class="ui button" type="submit">
+        <button className="ui button" type="submit">
           Submit
         </button>
       </form>

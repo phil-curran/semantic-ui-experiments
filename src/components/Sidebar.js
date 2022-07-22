@@ -1,55 +1,48 @@
 import $ from "jquery";
-import "../styles/sidebar.css";
-import "../styles/menu.css";
-import "../styles/button.css";
-import "../styles/icon.css";
-import "../scripts/sidebar.js";
 
-const Sidebar = () => {
-  // using context
-  $(".context.example .ui.sidebar")
-    .sidebar({
-      context: $(".context.example .bottom.segment"),
-    })
-    .sidebar("attach events", ".context.example .menu .item");
+const Sidebar = (props) => {
+  $(document).ready(function () {
+    $(".sidebarMenu").click(function () {
+      $(".ui.sidebar").sidebar("toggle");
+    });
+  });
 
   return (
     <>
-      <div class="ui visible top attached demo menu">
-        <a class="item">
-          <i class="sidebar icon"></i>
+      <div className="ui top attached demo menu visible">
+        <a className="item sidebarMenu">
+          <i className="sidebar icon"></i>
           Menu
         </a>
       </div>
-      <div class="ui bottom attached segment pushable">
-        <div
-          class="ui inverted labeled icon left inline vertical sidebar menu"
-          style=""
-        >
-          <a class="item">
-            <i class="home icon"></i>
+      <div className="ui bottom attached segment pushable">
+        <div className="ui inverted labeled icon left inline vertical sidebar menu">
+          <a className="item">
+            <i className="home icon"></i>
             Home
           </a>
-          <a class="item">
-            <i class="block layout icon"></i>
+          <a className="item">
+            <i className="block layout icon"></i>
             Topics
           </a>
-          <a class="item">
-            <i class="smile icon"></i>
+          <a className="item">
+            <i className="smile icon"></i>
             Friends
           </a>
-          <a class="item">
-            <i class="calendar icon"></i>
+          <a className="item">
+            <i className="calendar icon"></i>
             History
           </a>
         </div>
-        <div class="pusher">
-          <div class="ui basic segment">
-            <h3 class="ui header">Application Content</h3>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
+        <div className="ui container pusher">
+          <div className="">
+            <div className="ui basic segment">
+              <h3 className="ui header">Application Content</h3>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
           </div>
         </div>
       </div>
