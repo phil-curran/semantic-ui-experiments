@@ -1,9 +1,14 @@
 import $ from "jquery";
 
 const SecondaryMenu = () => {
+  $(document).ready(function () {
+    $(".item").tab();
+  });
+
   return (
     <>
-      <div className="ui secondary pointing menu">
+      {/* <div className="ui fluid four item pointing menu"> */}
+      <div className="ui four item menu">
         <a className="item active" data-tab="first">
           Home
         </a>
@@ -17,16 +22,16 @@ const SecondaryMenu = () => {
           Other
         </a>
       </div>
-      <div className="ui segment active" data-tab="first">
+      <div className="ui tab segment active" data-tab="first">
         <p>First</p>
       </div>
-      <div className="ui segment" data-tab="second">
+      <div className="ui tab segment" data-tab="second">
         <p>Second</p>
       </div>
-      <div className="ui segment" data-tab="thirdt">
+      <div className="ui tab segment" data-tab="third">
         <p>Third</p>
       </div>
-      <div className="ui segment" data-tab="fourth">
+      <div className="ui tab segment" data-tab="fourth">
         <p>Fourth</p>
       </div>
     </>

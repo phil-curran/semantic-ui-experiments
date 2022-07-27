@@ -4,9 +4,6 @@ const Tabs = (props) => {
   const { first, second, third } = props;
 
   $(document).ready(function () {
-    // $(".sidebarMenu").click(function () {
-    //   $(".ui.sidebar").sidebar("toggle");
-    // });
     $(".menu .item").tab("toggle");
   });
 

@@ -5,6 +5,7 @@ import "../semantic/semantic.js";
 import "../semantic/semantic.css";
 import "../styles/App.css";
 
+import Accordion from "./Accordion";
 import Buttons from "./Buttons.js";
 import Checkbox from "./Checkbox.js";
 import Dropdown from "./Dropdown.js";
@@ -15,6 +16,11 @@ import Tabs from "./Tabs.js";
 import Search from "./Search";
 import Emojis from "./Emojis.js";
 import SecondaryMenu from "./SecondaryMenu.js";
+import PointingMenu from "./PointingMenu.js";
+import Popup from "./Popup.js";
+import Multiselect from "./Multiselect.js";
+import SidebarAndTabs from "./SidebarAndTabs.js";
+import Login from "./Login.js";
 
 function App() {
   const [toggleBtn, setToggleBtn] = useState(true);
@@ -36,14 +42,20 @@ function App() {
   };
 
   return (
-    <div className="ui container">
-      <SecondaryMenu />
+    <div className="">
+      <Sidebar />
       {/* <Buttons />
+      <SidebarAndTabs />
+      <SecondaryMenu />
+      <PointingMenu />
       <Tabs first={first} second={second} third={third} />
+      <Login />
+      <Multiselect />
+      <Popup />
       <Dropdown />
       <Modal />
+      <Accordion />
       <Emojis />
-      <Sidebar toggleBtn={toggleBtn} />
       <Form />
       <Checkbox />
       <Search /> */}

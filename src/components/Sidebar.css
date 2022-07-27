@@ -1,0 +1,13 @@
+.hidden {
+  visibility: hidden;
+  display: none;
+}
+
+.visible {
+  visibility: visible;
+  display: block;
+}
+
+.sidebarMenu .button {
+  margin: 1em;
+}

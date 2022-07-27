@@ -1,34 +1,9 @@
-import "../styles/button.css";
-import "../styles/accordion.css";
-import "../styles/icon.css";
 import $ from "jquery";
-import "../scripts/accordion.js";
 
 const Accordion = () => {
-  // Vanilla JS
-  // let titles = Array.from(document.querySelectorAll(".title"));
-  // let contents = Array.from(document.querySelectorAll(".content"));
-
-  // let hideAllTitles = () => {
-  //   titles.forEach((title) => title.classList.remove("active"));
-  // };
-
-  // let hideAllContents = () => {
-  //   contents.forEach((content) => content.classList.remove("active"));
-  // };
-
-  // titles.forEach((title) => {
-  //   title.addEventListener("click", () => {
-  //     let position = titles.indexOf(title);
-  //     hideAllTitles();
-  //     hideAllContents();
-  //     titles[position].classList.add("active");
-  //     contents[position].classList.add("active");
-  //   });
-  // });
-
-  // jQuery
-  $(".ui.accordion").accordion();
+  $(document).ready(function () {
+    $(".ui.accordion").accordion();
+  });
 
   return (
     <>
