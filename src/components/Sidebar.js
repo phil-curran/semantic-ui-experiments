@@ -75,13 +75,11 @@ const Sidebar = () => {
   return (
     <>
       {/* hamburger menu */}
-      <div>
-        <a className="item sidebarMenu">
-          <button className="ui icon button sidebarMenu">
-            <i className="sidebar icon"></i>
-          </button>
-        </a>
-      </div>
+      <a className="item sidebarMenu">
+        <button className="ui icon button sidebarMenu">
+          <i className="sidebar icon"></i>
+        </button>
+      </a>
       {/* actual sidebar */}
       <div className="ui container bottom attached pushable">
         <div className="ui inverted labeled icon left inline vertical sidebar menu">

@@ -5,6 +5,39 @@ const Accordion = () => {
     $(".ui.accordion").accordion();
   });
 
+            {tasks.map((task, taskIndex) => {
+  <div key={taskIndex} className="drawer">
+    <div className="ui two column grid">
+      <div className="column">
+        <div className="title">
+          <i className="dropdown icon"></i>
+          {task.title}
+        </div>
+        <div className="content">
+          <p>{task.description}</p>
+        </div>
+      </div>
+      <div className="column">
+        <span className="actionButtons">
+          <div className="ui icon buttons">
+            <button className="mini ui button">
+              <i className="align left icon"></i>
+            </button>
+            <button className="mini ui button">
+              <i className="align center icon"></i>
+            </button>
+            <button className="mini ui button">
+              <i className="align right icon"></i>
+            </button>
+            <button className="mini ui button">
+              <i className="align justify icon"></i>
+            </button>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>;
+
   return (
     <>
       <div className="ui styled accordion">
