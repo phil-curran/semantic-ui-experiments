@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import $ from "jquery";
 import Icon from "@mdi/react";
 import {
@@ -10,12 +9,8 @@ import {
   mdiChartLine,
 } from "@mdi/js";
 import "./Sidebar.css";
-import HomeDash from "./HomeDash";
-import ToDoDash from "./ToDoDash";
-import FriendsDash from "./FriendsDash";
 
 const Sidebar = () => {
-  const [activePane, setActivePane] = useState(<HomeDash />);
   $(document).ready(() => {
     // sidebar visibility: show on hamburger click
     $(".sidebarMenu").click(() => {
@@ -23,26 +18,40 @@ const Sidebar = () => {
         .sidebar("setting", "transition", "overlay")
         .sidebar("toggle");
     });
-
     // sidebar visibility: hide on item click
     $(".sidebar.menu .item").click(() => {
       $(".ui.sidebar").sidebar("toggle");
     });
-
+    // handle show or hide of content panel
     let homeBtn = $("#homeBtn");
     let topicsBtn = $("#topicsBtn");
     let friendsBtn = $("#friendsBtn");
+    let historyBtn = $("#historyBtn");
 
-    let buttons = [homeBtn, topicsBtn, friendsBtn];
-    let contents = [<HomeDash />, <ToDoDash />, <FriendsDash />];
+    let homeContent = $("#home");
+    let topicsContent = $("#topics");
+    let friendsContent = $("#friends");
+    let historyContent = $("#history");
 
-    buttons.forEach((button) => {
-      button.click(() => {
-        let position = buttons.indexOf(button);
-        setActivePane(contents[position]);
+    let panels = [homeBtn, topicsBtn, friendsBtn, historyBtn];
+    let contents = [homeContent, topicsContent, friendsContent, historyContent];
+
+    panels.forEach((panel) => {
+      panel.click(() => {
+        let position = panels.indexOf(panel);
+        contents.forEach((content) => {
+          if (contents.indexOf(content) === position) {
+            content.removeClass("hidden").addClass("visible");
+          } else {
+            content.removeClass("visible").addClass("hidden");
+          }
+        });
       });
     });
-  }, []);
+  });
+
+  let activeTab = "#1abc9c";
+  let inactiveTab = "#7f8c8d";
 
   return (
     <>
@@ -55,7 +64,7 @@ const Sidebar = () => {
         </a>
       </div>
       {/* actual sidebar */}
-      <div className="ui container bottom attached pushable">
+      <div className="ui container bottom attached segment pushable">
         <div className="ui inverted labeled icon left inline vertical sidebar menu">
           <a id="homeBtn" className="item">
             <Icon
@@ -103,7 +112,18 @@ const Sidebar = () => {
         </div>
         <p></p>
         <div className="pusher">
-          <div className="ui segment">{activePane}</div>
+          <div id="home" className="ui basic segment visible">
+            Dashboard
+          </div>
+          <div id="topics" className="ui basic segment hidden">
+            To Do
+          </div>
+          <div id="friends" className="ui basic segment hidden">
+            Friends
+          </div>
+          <div id="history" className="ui basic segment hidden">
+            History
+          </div>
         </div>
       </div>
     </>

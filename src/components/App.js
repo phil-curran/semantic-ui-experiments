@@ -42,7 +42,7 @@ function App() {
   };
 
   return (
-    <div className="">
+    <div>
       <Sidebar />
       {/* <Buttons />
       <SidebarAndTabs />
