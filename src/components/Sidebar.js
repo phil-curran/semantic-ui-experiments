@@ -22,7 +22,7 @@ const Sidebar = () => {
     $(".sidebar.menu .item").click(() => {
       $(".ui.sidebar").sidebar("toggle");
     });
-    // $(".menu .item").segment("toggle");
+    // handle show or hide of content panel
     let homeBtn = $("#homeBtn");
     let topicsBtn = $("#topicsBtn");
     let friendsBtn = $("#friendsBtn");
