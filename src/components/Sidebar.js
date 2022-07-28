@@ -12,7 +12,10 @@ import {
 import "./Sidebar.css";
 import HomeDash from "./HomeDash";
 import ToDoDash from "./ToDoDash";
-import FriendsDash from "./FriendsDash";
+import JournalDash from "./JournalDash";
+import SleepTracker from "./SleepTracker";
+import WeightTracker from "./WeightTracker";
+import InternetUsage from "./InternetUsage";
 
 const Sidebar = () => {
   const [activePane, setActivePane] = useState(<HomeDash />);
@@ -30,16 +33,41 @@ const Sidebar = () => {
     });
 
     let homeBtn = $("#homeBtn");
-    let topicsBtn = $("#topicsBtn");
-    let friendsBtn = $("#friendsBtn");
+    let todoBtn = $("#todoBtn");
+    let journalBtn = $("#journalBtn");
+    let sleepTrackerBtn = $("#sleepTrackerBtn");
+    let weightTrackerBtn = $("#weightTrackerBtn");
+    let internetUsageBtn = $("#internetUsageBtn");
 
-    let buttons = [homeBtn, topicsBtn, friendsBtn];
-    let contents = [<HomeDash />, <ToDoDash />, <FriendsDash />];
+    let buttons = [
+      homeBtn,
+      todoBtn,
+      journalBtn,
+      sleepTrackerBtn,
+      weightTrackerBtn,
+      internetUsageBtn,
+    ];
+
+    let contents = [
+      <HomeDash />,
+      <ToDoDash />,
+      <JournalDash />,
+      <SleepTracker />,
+      <WeightTracker />,
+      <InternetUsage />,
+    ];
+
+    let activeColor = "#1abc9c";
+    let inactiveColor = "#2c3e50";
 
     buttons.forEach((button) => {
       button.click(() => {
         let position = buttons.indexOf(button);
-        setActivePane(contents[position]);
+        contents.forEach((content) => {
+          if (contents.indexOf(content) === position) {
+            setActivePane(content);
+          }
+        });
       });
     });
   }, []);
@@ -65,7 +93,7 @@ const Sidebar = () => {
               size={1.5}
             />
           </a>
-          <a id="topicsBtn" className="item">
+          <a id="todoBtn" className="item">
             <Icon
               path={mdiFormatListChecks}
               title="To Do"
@@ -73,7 +101,7 @@ const Sidebar = () => {
               size={1.5}
             />
           </a>
-          <a id="friendsBtn" className="item">
+          <a id="journalBtn" className="item">
             <Icon
               path={mdiNotebookOutline}
               title="Journal"
@@ -81,10 +109,10 @@ const Sidebar = () => {
               size={1.5}
             />
           </a>
-          <a id="historyBtn" className="item">
+          <a id="sleepTrackerBtn" className="item">
             <Icon path={mdiBedClock} title="Sleep" color="#7f8c8d" size={1.5} />
           </a>
-          <a id="historyBtn" className="item">
+          <a id="weightTrackerBtn" className="item">
             <Icon
               path={mdiWeightPound}
               title="Weight"
@@ -92,7 +120,7 @@ const Sidebar = () => {
               size={1.5}
             />
           </a>
-          <a id="historyBtn" className="item">
+          <a id="internetUsageBtn" className="item">
             <Icon
               path={mdiChartLine}
               title="Internet Usage"
@@ -102,7 +130,7 @@ const Sidebar = () => {
           </a>
         </div>
         <p></p>
-        <div className="pusher">
+        <div className="pusher segment">
           <div className="ui segment">{activePane}</div>
         </div>
       </div>
