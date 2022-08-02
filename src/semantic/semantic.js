@@ -11,7 +11,7 @@ import $ from "jquery";
     var time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       settings = $.isPlainObject(parameters)
         ? $.extend(true, {}, $.site.settings, parameters)
@@ -49,16 +49,16 @@ import $ from "jquery";
             module.disable.console();
           }
           if (
-            typeof console.group == "undefined" ||
-            typeof console.groupEnd == "undefined" ||
-            typeof console.groupCollapsed == "undefined"
+            typeof console.group === "undefined" ||
+            typeof console.groupEnd === "undefined" ||
+            typeof console.groupCollapsed === "undefined"
           ) {
             module.verbose("Console group not available, normalizing events");
             window.console.group = function () {};
             window.console.groupEnd = function () {};
             window.console.groupCollapsed = function () {};
           }
-          if (typeof console.markTimeline == "undefined") {
+          if (typeof console.markTimeline === "undefined") {
             module.verbose("Mark timeline not available, normalizing events");
             window.console.markTimeline = function () {};
           }
@@ -344,22 +344,22 @@ import $ from "jquery";
           response;
         passedArguments = passedArguments || queryArguments;
         context = element || context;
-        if (typeof query == "string" && object !== undefined) {
+        if (typeof query === "string" && object !== undefined) {
           query = query.split(/[. ]/);
           maxDepth = query.length - 1;
           $.each(query, function (depth, value) {
             var camelCaseValue =
-              depth != maxDepth
+              depth !== maxDepth
                 ? value +
                   query[depth + 1].charAt(0).toUpperCase() +
                   query[depth + 1].slice(1)
                 : query;
-            if ($.isPlainObject(object[camelCaseValue]) && depth != maxDepth) {
+            if ($.isPlainObject(object[camelCaseValue]) && depth !== maxDepth) {
               object = object[camelCaseValue];
             } else if (object[camelCaseValue] !== undefined) {
               found = object[camelCaseValue];
               return false;
-            } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+            } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
               object = object[value];
             } else if (object[value] !== undefined) {
               found = object[value];
@@ -482,9 +482,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -495,7 +495,7 @@ import $ from "jquery";
       performance = [],
       query = arguments[0],
       legacyParameters = arguments[1],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -765,7 +765,7 @@ import $ from "jquery";
           },
           // duck type rule test
           shorthandRules: function (rules) {
-            return typeof rules == "string" || Array.isArray(rules);
+            return typeof rules === "string" || Array.isArray(rules);
           },
           empty: function ($field) {
             if (!$field || $field.length === 0) {
@@ -807,13 +807,13 @@ import $ from "jquery";
           fieldDirty: function ($el) {
             var initialValue = $el.data(metadata.defaultValue);
             // Explicitly check for null/undefined here as value may be `false`, so ($el.data(dataInitialValue) || '') would not work
-            if (initialValue == null) {
+            if (initialValue === null) {
               initialValue = "";
             } else if (Array.isArray(initialValue)) {
               initialValue = initialValue.toString();
             }
             var currentValue = $el.val();
-            if (currentValue == null) {
+            if (currentValue === null) {
               currentValue = "";
             }
             // multiple select values are returned as arrays which are never equal, so do string conversion first
@@ -864,13 +864,13 @@ import $ from "jquery";
                   enter: 13,
                   escape: 27,
                 };
-              if (key == keyCode.escape) {
+              if (key === keyCode.escape) {
                 module.verbose("Escape key pressed blurring field");
                 $field[0].blur();
               }
               if (
                 !event.ctrlKey &&
-                key == keyCode.enter &&
+                key === keyCode.enter &&
                 isInput &&
                 !isInDropdown &&
                 !isCheckbox
@@ -895,7 +895,7 @@ import $ from "jquery";
                 validationRules = module.get.validation($field);
               if (
                 validationRules &&
-                (settings.on == "blur" ||
+                (settings.on === "blur" ||
                   ($fieldGroup.hasClass(className.error) &&
                     settings.revalidate))
               ) {
@@ -912,7 +912,7 @@ import $ from "jquery";
                 validationRules = module.get.validation($field);
               if (
                 validationRules &&
-                (settings.on == "change" ||
+                (settings.on === "change" ||
                   ($fieldGroup.hasClass(className.error) &&
                     settings.revalidate))
               ) {
@@ -962,9 +962,9 @@ import $ from "jquery";
           },
           changeEvent: function (type, $input) {
             if (
-              type == "checkbox" ||
-              type == "radio" ||
-              type == "hidden" ||
+              type === "checkbox" ||
+              type === "radio" ||
+              type === "hidden" ||
               $input.is("select")
             ) {
               return "change";
@@ -985,7 +985,7 @@ import $ from "jquery";
               if (!Array.isArray(rules) && typeof rules === "object") {
                 fullFields[name] = rules;
               } else {
-                if (typeof rules == "string") {
+                if (typeof rules === "string") {
                   rules = [rules];
                 }
                 fullFields[name] = {
@@ -1043,7 +1043,7 @@ import $ from "jquery";
             if (requiresName) {
               $label = $field.closest(selector.group).find("label").eq(0);
               name =
-                $label.length == 1
+                $label.length === 1
                   ? $label.text()
                   : $field.prop("placeholder") ||
                     settings.text.unspecifiedField;
@@ -1169,7 +1169,7 @@ import $ from "jquery";
               $.each(
                 module.get.field(identifier),
                 function (index, groupField) {
-                  if (groupField == $field[0]) {
+                  if (groupField === $field[0]) {
                     field.identifier = identifier;
                     fieldValidation = field;
                     return false;
@@ -1232,11 +1232,11 @@ import $ from "jquery";
                     var date = $calendar.calendar("get date");
 
                     if (date !== null) {
-                      if (settings.dateHandling == "date") {
+                      if (settings.dateHandling === "date") {
                         values[name] = date;
-                      } else if (settings.dateHandling == "input") {
+                      } else if (settings.dateHandling === "input") {
                         values[name] = $calendar.calendar("get input date");
-                      } else if (settings.dateHandling == "formatter") {
+                      } else if (settings.dateHandling === "formatter") {
                         var type = $calendar.calendar("setting", "type");
 
                         switch (type) {
@@ -1361,8 +1361,8 @@ import $ from "jquery";
             $.each(newValidation.rules, function (_index, rule) {
               if (
                 $.grep(validation[name].rules, function (item) {
-                  return item.type == rule.type;
-                }).length == 0
+                  return item.type === rule.type;
+                }).length === 0
               ) {
                 validation[name].rules.push(rule);
               }
@@ -1381,7 +1381,7 @@ import $ from "jquery";
               $fieldGroup = $field.closest($group),
               $prompt = $fieldGroup.children(selector.prompt),
               promptExists = $prompt.length !== 0;
-            errors = typeof errors == "string" ? [errors] : errors;
+            errors = typeof errors === "string" ? [errors] : errors;
             module.verbose("Adding field error state", identifier);
             if (!internal) {
               $fieldGroup.addClass(className.error);
@@ -1640,7 +1640,7 @@ import $ from "jquery";
                 validation = module.get.validation($el),
                 hasEmptyRule = validation
                   ? $.grep(validation.rules, function (rule) {
-                      return rule.type == "empty";
+                      return rule.type === "empty";
                     }) !== 0
                   : false,
                 identifier =
@@ -1667,7 +1667,7 @@ import $ from "jquery";
           optional: function (identifier, bool) {
             bool = bool !== false;
             $.each(validation, function (fieldName, field) {
-              if (identifier == fieldName || identifier == field.identifier) {
+              if (identifier === fieldName || identifier === field.identifier) {
                 field.optional = bool;
               }
             });
@@ -1736,7 +1736,7 @@ import $ from "jquery";
           // takes a validation object and returns whether field passes validation
           field: function (field, fieldName, showErrors) {
             showErrors = showErrors !== undefined ? showErrors : true;
-            if (typeof field == "string") {
+            if (typeof field === "string") {
               module.verbose("Validating field", field);
               fieldName = field;
               field = validation[field];
@@ -1958,25 +1958,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -2055,12 +2055,12 @@ import $ from "jquery";
       bracket: /\[(.*)\]/i,
       decimal: /^\d+\.?\d*$/,
       email:
-        /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i,
-      escape: /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|:,=@]/g,
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i,
+      escape: /[-[\]/{}*+?.\\^$|:,=@]/g,
       flags: /^\/(.*)\/(.*)?/,
-      integer: /^\-?\d+$/,
-      number: /^\-?\d*(\.\d+)?$/,
-      url: /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
+      integer: /^-?\d+$/,
+      number: /^-?\d*(\.\d+)?$/,
+      url: /(https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/i,
     },
 
     text: {
@@ -2238,7 +2238,7 @@ import $ from "jquery";
         return $.fn.form.settings.rules.range(value, range, "integer");
       },
       range: function (value, range, regExp) {
-        if (typeof regExp == "string") {
+        if (typeof regExp === "string") {
           regExp = $.fn.form.settings.regExp[regExp];
         }
         if (!(regExp instanceof RegExp)) {
@@ -2247,7 +2247,7 @@ import $ from "jquery";
         var min, max, parts;
         if (!range || ["", ".."].indexOf(range) !== -1) {
           // do nothing
-        } else if (range.indexOf("..") == -1) {
+        } else if (range.indexOf("..") === -1) {
           if (regExp.test(range)) {
             min = max = range - 0;
           }
@@ -2279,27 +2279,27 @@ import $ from "jquery";
 
       // is value (case insensitive)
       is: function (value, text) {
-        text = typeof text == "string" ? text.toLowerCase() : text;
-        value = typeof value == "string" ? value.toLowerCase() : value;
-        return value == text;
+        text = typeof text === "string" ? text.toLowerCase() : text;
+        value = typeof value === "string" ? value.toLowerCase() : value;
+        return value === text;
       },
 
       // is value
       isExactly: function (value, text) {
-        return value == text;
+        return value === text;
       },
 
       // value is not another value (case insensitive)
       not: function (value, notValue) {
-        value = typeof value == "string" ? value.toLowerCase() : value;
+        value = typeof value === "string" ? value.toLowerCase() : value;
         notValue =
-          typeof notValue == "string" ? notValue.toLowerCase() : notValue;
-        return value != notValue;
+          typeof notValue === "string" ? notValue.toLowerCase() : notValue;
+        return value !== notValue;
       },
 
       // value is not another value (case sensitive)
       notExactly: function (value, notValue) {
-        return value != notValue;
+        return value !== notValue;
       },
 
       // value contains text (insensitive)
@@ -2342,7 +2342,7 @@ import $ from "jquery";
 
       // is exactly length
       exactLength: function (value, requiredLength) {
-        return value !== undefined ? value.length == requiredLength : false;
+        return value !== undefined ? value.length === requiredLength : false;
       },
 
       // is less than length
@@ -2375,7 +2375,7 @@ import $ from "jquery";
           matchingValue = matchingElement;
         }
         return matchingValue !== undefined
-          ? value.toString() == matchingValue.toString()
+          ? value.toString() === matchingValue.toString()
           : false;
       },
 
@@ -2456,7 +2456,7 @@ import $ from "jquery";
           valid = {},
           validCard = false,
           requiredTypes =
-            typeof cardTypes == "string" ? cardTypes.split(",") : false,
+            typeof cardTypes === "string" ? cardTypes.split(",") : false,
           unionPay,
           validation;
 
@@ -2465,7 +2465,7 @@ import $ from "jquery";
         }
 
         // allow dashes and spaces in card
-        cardNumber = cardNumber.replace(/[\s\-]/g, "");
+        cardNumber = cardNumber.replace(/[\s-]/g, "");
 
         // verify card types
         if (requiredTypes) {
@@ -2514,30 +2514,30 @@ import $ from "jquery";
       },
 
       minCount: function (value, minCount) {
-        if (minCount == 0) {
+        if (minCount === 0) {
           return true;
         }
-        if (minCount == 1) {
+        if (minCount === 1) {
           return value !== "";
         }
         return value.split(",").length >= minCount;
       },
 
       exactCount: function (value, exactCount) {
-        if (exactCount == 0) {
+        if (exactCount === 0) {
           return value === "";
         }
-        if (exactCount == 1) {
+        if (exactCount === 1) {
           return value !== "" && value.search(",") === -1;
         }
-        return value.split(",").length == exactCount;
+        return value.split(",").length === exactCount;
       },
 
       maxCount: function (value, maxCount) {
-        if (maxCount == 0) {
+        if (maxCount === 0) {
           return false;
         }
-        if (maxCount == 1) {
+        if (maxCount === 1) {
           return value.search(",") === -1;
         }
         return value.split(",").length <= maxCount;
@@ -2564,9 +2564,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -2575,7 +2575,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -3014,25 +3014,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -3146,9 +3146,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -3158,7 +3158,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue,
       timeGapTable = {
@@ -3911,7 +3911,7 @@ import $ from "jquery";
                     ? -1
                     : keyCode === 38
                     ? -bigIncrement
-                    : keyCode == 39
+                    : keyCode === 39
                     ? 1
                     : bigIncrement;
                 increment *= mode === "minute" ? settings.minTimeGap : 1;
@@ -4226,7 +4226,7 @@ import $ from "jquery";
             );
             updateFocus =
               (updateFocus !== false && changed && refreshCalendar === false) ||
-              focusDateUsedForRange != updateRange;
+              focusDateUsedForRange !== updateRange;
             focusDateUsedForRange = updateRange;
             if (updateFocus) {
               module.update.focus(updateRange);
@@ -4377,7 +4377,7 @@ import $ from "jquery";
                   if (d !== null && typeof d === "object") {
                     if (d[metadata.year]) {
                       if (typeof d[metadata.year] === "number") {
-                        return date.getFullYear() == d[metadata.year];
+                        return date.getFullYear() === d[metadata.year];
                       } else if (Array.isArray(d[metadata.year])) {
                         return (
                           d[metadata.year].indexOf(date.getFullYear()) > -1
@@ -4385,7 +4385,7 @@ import $ from "jquery";
                       }
                     } else if (d[metadata.month]) {
                       if (typeof d[metadata.month] === "number") {
-                        return date.getMonth() == d[metadata.month];
+                        return date.getMonth() === d[metadata.month];
                       } else if (Array.isArray(d[metadata.month])) {
                         return d[metadata.month].indexOf(date.getMonth()) > -1;
                       } else if (d[metadata.month] instanceof Date) {
@@ -4393,8 +4393,8 @@ import $ from "jquery";
                           d[metadata.month]
                         );
                         return (
-                          date.getMonth() == sdate.getMonth() &&
-                          date.getFullYear() == sdate.getFullYear()
+                          date.getMonth() === sdate.getMonth() &&
+                          date.getFullYear() === sdate.getFullYear()
                         );
                       }
                     } else if (d[metadata.date] && mode === "day") {
@@ -4457,7 +4457,7 @@ import $ from "jquery";
                   if (d[metadata.year]) {
                     if (
                       typeof d[metadata.year] === "number" &&
-                      date.getFullYear() == d[metadata.year]
+                      date.getFullYear() === d[metadata.year]
                     ) {
                       return d;
                     } else if (Array.isArray(d[metadata.year])) {
@@ -4468,7 +4468,7 @@ import $ from "jquery";
                   } else if (d[metadata.month]) {
                     if (
                       typeof d[metadata.month] === "number" &&
-                      date.getMonth() == d[metadata.month]
+                      date.getMonth() === d[metadata.month]
                     ) {
                       return d;
                     } else if (Array.isArray(d[metadata.month])) {
@@ -4478,8 +4478,8 @@ import $ from "jquery";
                     } else if (d[metadata.month] instanceof Date) {
                       var sdate = module.helper.sanitiseDate(d[metadata.month]);
                       if (
-                        date.getMonth() == sdate.getMonth() &&
-                        date.getFullYear() == sdate.getFullYear()
+                        date.getMonth() === sdate.getMonth() &&
+                        date.getFullYear() === sdate.getFullYear()
                       ) {
                         return d;
                       }
@@ -4748,25 +4748,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -4988,8 +4988,8 @@ import $ from "jquery";
         if (text.length === 0) {
           return null;
         }
-        if (text.match(/^[0-9]{4}[\/\-\.][0-9]{1,2}[\/\-\.][0-9]{1,2}$/)) {
-          text = text.replace(/[\/\-\.]/g, "/") + " 00:00:00";
+        if (text.match(/^[0-9]{4}[/\-.][0-9]{1,2}[/\-.][0-9]{1,2}$/)) {
+          text = text.replace(/[/\-.]/g, "/") + " 00:00:00";
         }
         // Reverse date and month in some cases
         text =
@@ -5320,9 +5320,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -5332,7 +5332,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -5458,7 +5458,7 @@ import $ from "jquery";
           }
         },
 
-        preventDefaultOnInputTarget: function () {
+        preventDefaultOnInputTarget: function (event) {
           if (
             typeof event !== "undefined" &&
             event !== null &&
@@ -5509,9 +5509,9 @@ import $ from "jquery";
               rLen = r.length,
               checkIndex = false;
 
-            if (key == keyCode.left || key == keyCode.up) {
+            if (key === keyCode.left || key === keyCode.up) {
               checkIndex = (rIndex === 0 ? rLen : rIndex) - 1;
-            } else if (key == keyCode.right || key == keyCode.down) {
+            } else if (key === keyCode.right || key === keyCode.down) {
               checkIndex = rIndex === rLen - 1 ? 0 : rIndex + 1;
             }
 
@@ -5534,14 +5534,14 @@ import $ from "jquery";
               }
             }
 
-            if (key == keyCode.escape) {
+            if (key === keyCode.escape) {
               module.verbose("Escape key pressed blurring field");
               $input.blur();
               shortcutPressed = true;
             } else if (
               !event.ctrlKey &&
-              (key == keyCode.space ||
-                (key == keyCode.enter && settings.enableEnterKey))
+              (key === keyCode.space ||
+                (key === keyCode.enter && settings.enableEnterKey))
             ) {
               module.verbose("Enter/space key pressed, toggling checkbox");
               module.toggle();
@@ -5658,7 +5658,8 @@ import $ from "jquery";
           },
           radio: function () {
             return (
-              $input.hasClass(className.radio) || $input.attr("type") == "radio"
+              $input.hasClass(className.radio) ||
+              $input.attr("type") === "radio"
             );
           },
           indeterminate: function () {
@@ -6078,25 +6079,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -6213,9 +6214,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -6224,7 +6225,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -6292,11 +6293,11 @@ import $ from "jquery";
 
         bind: {
           events: function () {
-            if (settings.on == "hover") {
+            if (settings.on === "hover") {
               $dimmable
                 .on("mouseenter" + eventNamespace, module.show)
                 .on("mouseleave" + eventNamespace, module.hide);
-            } else if (settings.on == "click") {
+            } else if (settings.on === "click") {
               $dimmable.on(clickEvent + eventNamespace, module.toggle);
             }
             if (module.is.page()) {
@@ -6429,7 +6430,7 @@ import $ from "jquery";
             } else {
               module.verbose("Showing dimmer animation with javascript");
               module.set.dimmed();
-              if (settings.opacity == "auto") {
+              if (settings.opacity === "auto") {
                 settings.opacity = 0.8;
               }
               $dimmer
@@ -6525,8 +6526,8 @@ import $ from "jquery";
             );
           },
           closable: function () {
-            if (settings.closable == "auto") {
-              if (settings.on == "hover") {
+            if (settings.closable === "auto") {
+              if (settings.on === "hover") {
                 return false;
               }
               return true;
@@ -6748,25 +6749,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -6919,9 +6920,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -6934,7 +6935,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -7581,7 +7582,7 @@ import $ from "jquery";
                   .on(clickEvent + eventNamespace, module.event.search.focus);
               }
             } else {
-              if (settings.on == "click") {
+              if (settings.on === "click") {
                 $module
                   .on(
                     clickEvent + eventNamespace,
@@ -7589,7 +7590,7 @@ import $ from "jquery";
                     module.event.icon.click
                   )
                   .on(clickEvent + eventNamespace, module.event.test.toggle);
-              } else if (settings.on == "hover") {
+              } else if (settings.on === "hover") {
                 $module
                   .on("mouseenter" + eventNamespace, module.delay.show)
                   .on("mouseleave" + eventNamespace, module.delay.hide);
@@ -7661,7 +7662,7 @@ import $ from "jquery";
               if (module.is.multiple()) {
                 module.filterActive();
               }
-              if (query || (!query && module.get.activeItem().length == 0)) {
+              if (query || (!query && module.get.activeItem().length === 0)) {
                 module.select.firstUnfiltered();
               }
               if (module.has.allResultsFiltered()) {
@@ -7987,7 +7988,7 @@ import $ from "jquery";
             menuConfig[fields.values] = values;
             module.setup.menu(menuConfig);
             $.each(values, function (index, item) {
-              if (item.selected == true) {
+              if (item.selected === true) {
                 module.debug(
                   "Setting initial selection to",
                   item[fields.value]
@@ -8213,11 +8214,11 @@ import $ from "jquery";
             },
             touch: function (event) {
               module.determine.eventOnElement(event, function () {
-                if (event.type == "touchstart") {
+                if (event.type === "touchstart") {
                   module.timer = setTimeout(function () {
                     module.hide();
                   }, settings.delay.touch);
-                } else if (event.type == "touchmove") {
+                } else if (event.type === "touchmove") {
                   clearTimeout(module.timer);
                 }
               });
@@ -8336,7 +8337,7 @@ import $ from "jquery";
                     module.remove.userAddition();
                   }
                   module.remove.searchTerm();
-                  if (!module.is.focusedOnSearch() && !(skipRefocus == true)) {
+                  if (!module.is.focusedOnSearch() && !(skipRefocus === true)) {
                     module.focusSearch(true);
                   }
                 }
@@ -8363,7 +8364,7 @@ import $ from "jquery";
                   hasActiveLabel = $activeLabel.length > 0,
                   hasMultipleActive = $activeLabel.length > 1,
                   isFirstLabel = labelIndex === 0,
-                  isLastLabel = labelIndex + 1 == labelCount,
+                  isLastLabel = labelIndex + 1 === labelCount,
                   isSearch = module.is.searchSelection(),
                   isFocusedOnSearch = module.is.focusedOnSearch(),
                   isFocused = module.is.focused(),
@@ -8376,7 +8377,7 @@ import $ from "jquery";
                   return;
                 }
 
-                if (pressedKey == keys.leftArrow) {
+                if (pressedKey === keys.leftArrow) {
                   // activate previous label
                   if ((isFocused || caretAtStart) && !hasActiveLabel) {
                     module.verbose("Selecting previous label");
@@ -8398,7 +8399,7 @@ import $ from "jquery";
                     }
                     event.preventDefault();
                   }
-                } else if (pressedKey == keys.rightArrow) {
+                } else if (pressedKey === keys.rightArrow) {
                   // activate first label
                   if (isFocused && !hasActiveLabel) {
                     $label.first().addClass(className.active);
@@ -8433,8 +8434,8 @@ import $ from "jquery";
                     event.preventDefault();
                   }
                 } else if (
-                  pressedKey == keys.deleteKey ||
-                  pressedKey == keys.backspace
+                  pressedKey === keys.deleteKey ||
+                  pressedKey === keys.backspace
                 ) {
                   if (hasActiveLabel) {
                     module.verbose("Removing active labels");
@@ -8453,7 +8454,7 @@ import $ from "jquery";
                     caretAtStart &&
                     !isSelectedSearch &&
                     !hasActiveLabel &&
-                    pressedKey == keys.backspace
+                    pressedKey === keys.backspace
                   ) {
                     module.verbose("Removing last label on input backspace");
                     $activeLabel = $label.last().addClass(className.active);
@@ -8496,13 +8497,13 @@ import $ from "jquery";
                 selectedIsSelectable =
                   $selectedItem.not(selector.unselectable).length > 0,
                 delimiterPressed =
-                  pressedKey == keys.delimiter &&
+                  pressedKey === keys.delimiter &&
                   settings.allowAdditions &&
                   module.is.multiple(),
                 isAdditionWithoutMenu =
                   settings.allowAdditions &&
                   settings.hideAdditions &&
-                  (pressedKey == keys.enter || delimiterPressed) &&
+                  (pressedKey === keys.enter || delimiterPressed) &&
                   selectedIsSelectable,
                 $nextItem,
                 isSubMenuItem,
@@ -8525,9 +8526,9 @@ import $ from "jquery";
               // visible menu keyboard shortcuts
               if (module.is.visible()) {
                 // enter (select or open sub-menu)
-                if (pressedKey == keys.enter || delimiterPressed) {
+                if (pressedKey === keys.enter || delimiterPressed) {
                   if (
-                    pressedKey == keys.enter &&
+                    pressedKey === keys.enter &&
                     hasSelectedItem &&
                     hasSubMenu &&
                     !settings.allowCategorySelection
@@ -8554,7 +8555,7 @@ import $ from "jquery";
 
                 // sub-menu actions
                 if (hasSelectedItem) {
-                  if (pressedKey == keys.leftArrow) {
+                  if (pressedKey === keys.leftArrow) {
                     isSubMenuItem = $parentMenu[0] !== $menu[0];
 
                     if (isSubMenuItem) {
@@ -8569,7 +8570,7 @@ import $ from "jquery";
                   }
 
                   // right arrow (show sub-menu)
-                  if (pressedKey == keys.rightArrow) {
+                  if (pressedKey === keys.rightArrow) {
                     if (hasSubMenu) {
                       module.verbose("Right key pressed, opening sub-menu");
                       module.animate.show(false, $subMenu);
@@ -8584,7 +8585,7 @@ import $ from "jquery";
                 }
 
                 // up arrow (traverse menu up)
-                if (pressedKey == keys.upArrow) {
+                if (pressedKey === keys.upArrow) {
                   $nextItem =
                     hasSelectedItem && inVisibleMenu
                       ? $selectedItem
@@ -8615,7 +8616,7 @@ import $ from "jquery";
                 }
 
                 // down arrow (traverse menu down)
-                if (pressedKey == keys.downArrow) {
+                if (pressedKey === keys.downArrow) {
                   $nextItem =
                     hasSelectedItem && inVisibleMenu
                       ? ($nextItem = $selectedItem
@@ -8646,17 +8647,17 @@ import $ from "jquery";
                 }
 
                 // page down (show next page)
-                if (pressedKey == keys.pageUp) {
+                if (pressedKey === keys.pageUp) {
                   module.scrollPage("up");
                   event.preventDefault();
                 }
-                if (pressedKey == keys.pageDown) {
+                if (pressedKey === keys.pageDown) {
                   module.scrollPage("down");
                   event.preventDefault();
                 }
 
                 // escape (close menu)
-                if (pressedKey == keys.escape) {
+                if (pressedKey === keys.escape) {
                   module.verbose("Escape key pressed, closing dropdown");
                   module.hide();
                 }
@@ -8666,7 +8667,7 @@ import $ from "jquery";
                   event.preventDefault();
                 }
                 // down arrow (open menu)
-                if (pressedKey == keys.downArrow && !module.is.visible()) {
+                if (pressedKey === keys.downArrow && !module.is.visible()) {
                   module.verbose("Down key pressed, showing dropdown");
                   module.show();
                   event.preventDefault();
@@ -8801,7 +8802,7 @@ import $ from "jquery";
           placeholderText: function () {
             if (
               settings.placeholder != "auto" &&
-              typeof settings.placeholder == "string"
+              typeof settings.placeholder === "string"
             ) {
               return settings.placeholder;
             }
@@ -8887,7 +8888,7 @@ import $ from "jquery";
               return "";
             }
             return !module.has.selectInput() && module.is.multiple()
-              ? typeof value == "string" // delimited string
+              ? typeof value === "string" // delimited string
                 ? (raw ? value : module.escape.htmlEntities(value)).split(
                     settings.delimiter
                   )
@@ -8898,7 +8899,7 @@ import $ from "jquery";
             var values = module.get.values(),
               remoteValues = false;
             if (values) {
-              if (typeof values == "string") {
+              if (typeof values === "string") {
                 values = [values];
               }
               $.each(values, function (index, value) {
@@ -9330,7 +9331,7 @@ import $ from "jquery";
             itemsPerPage = Math.floor(menuHeight / itemHeight),
             maxScroll = $menu.prop("scrollHeight"),
             newScroll =
-              direction == "up"
+              direction === "up"
                 ? currentScroll - itemHeight * itemsPerPage
                 : currentScroll + itemHeight * itemsPerPage,
             $selectableItem = $item.not(selector.unselectable),
@@ -9338,16 +9339,16 @@ import $ from "jquery";
             $nextSelectedItem,
             elementIndex;
           elementIndex =
-            direction == "up"
+            direction === "up"
               ? $selectableItem.index($currentItem) - itemsPerPage
               : $selectableItem.index($currentItem) + itemsPerPage;
           isWithinRange =
-            direction == "up"
+            direction === "up"
               ? elementIndex >= 0
               : elementIndex < $selectableItem.length;
           $nextSelectedItem = isWithinRange
             ? $selectableItem.eq(elementIndex)
-            : direction == "up"
+            : direction === "up"
             ? $selectableItem.first()
             : $selectableItem.last();
           if ($nextSelectedItem.length > 0) {
@@ -9538,7 +9539,7 @@ import $ from "jquery";
             }
           },
           direction: function ($menu) {
-            if (settings.direction == "auto") {
+            if (settings.direction === "auto") {
               // reset position, remove upward if it's base menu
               if (!$menu) {
                 module.remove.upward();
@@ -9558,7 +9559,7 @@ import $ from "jquery";
               ) {
                 module.set.leftward($menu);
               }
-            } else if (settings.direction == "upward") {
+            } else if (settings.direction === "upward") {
               module.set.upward($menu);
             }
           },
@@ -9586,7 +9587,7 @@ import $ from "jquery";
               stringValue = value !== undefined ? String(value) : value,
               newValue;
             if (hasInput) {
-              if (!settings.allowReselection && stringValue == currentValue) {
+              if (!settings.allowReselection && stringValue === currentValue) {
                 module.verbose(
                   "Skipping value update already same value",
                   value,
@@ -9673,7 +9674,7 @@ import $ from "jquery";
                 isFiltered = $selected.hasClass(className.filtered),
                 isActive = $selected.hasClass(className.active),
                 isUserValue = $selected.hasClass(className.addition),
-                shouldAnimate = isMultiple && $selectedItem.length == 1;
+                shouldAnimate = isMultiple && $selectedItem.length === 1;
               if (isMultiple) {
                 if (!isActive || isUserValue) {
                   if (settings.apiSettings && settings.saveRemoteData) {
@@ -10227,7 +10228,7 @@ import $ from "jquery";
             text = module.get.choiceText($item, false);
             letter = letter.toLowerCase();
             firstLetter = String(text).charAt(0).toLowerCase();
-            return letter == firstLetter;
+            return letter === firstLetter;
           },
           input: function () {
             return $input.length > 0;
@@ -10288,7 +10289,7 @@ import $ from "jquery";
             var values = module.get.values(true),
               hasValue = Array.isArray(values)
                 ? values && $.inArray(value, values) !== -1
-                : values == value;
+                : values === value;
             return hasValue ? true : false;
           },
           valueIgnoringCase: function (value) {
@@ -10299,7 +10300,7 @@ import $ from "jquery";
             }
             $.each(values, function (index, existingValue) {
               if (
-                String(value).toLowerCase() ==
+                String(value).toLowerCase() ===
                 String(existingValue).toLowerCase()
               ) {
                 hasValue = true;
@@ -10368,7 +10369,7 @@ import $ from "jquery";
             return (
               (module.is.multiple() || module.has.search()) &&
               !(
-                settings.hideAdditions == false && module.has.userSuggestion()
+                settings.hideAdditions === false && module.has.userSuggestion()
               ) &&
               !module.has.message() &&
               module.has.allResultsFiltered()
@@ -10383,7 +10384,7 @@ import $ from "jquery";
           inObject: function (needle, object) {
             var found = false;
             $.each(object, function (index, property) {
-              if (property == needle) {
+              if (property === needle) {
                 found = true;
                 return true;
               }
@@ -10442,12 +10443,12 @@ import $ from "jquery";
           verticallyScrollableContext: function () {
             var overflowY =
               $context.get(0) !== window ? $context.css("overflow-y") : false;
-            return overflowY == "auto" || overflowY == "scroll";
+            return overflowY === "auto" || overflowY === "scroll";
           },
           horizontallyScrollableContext: function () {
             var overflowX =
               $context.get(0) !== window ? $context.css("overflow-X") : false;
-            return overflowX == "auto" || overflowX == "scroll";
+            return overflowX === "auto" || overflowX === "scroll";
           },
         },
 
@@ -10566,7 +10567,7 @@ import $ from "jquery";
             return canOpenRightward;
           },
           click: function () {
-            return hasTouch || settings.on == "click";
+            return hasTouch || settings.on === "click";
           },
           extendSelect: function () {
             return settings.allowAdditions || settings.apiSettings;
@@ -10878,25 +10879,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -11371,8 +11372,6 @@ import $ from "jquery";
  */
 
 (function ($, window, document, undefined) {
-  "use strict";
-
   $.isFunction =
     $.isFunction ||
     function (obj) {
@@ -11380,9 +11379,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -11392,7 +11391,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -11705,7 +11704,7 @@ import $ from "jquery";
 
         is: {
           video: function () {
-            return module.get.type() == "video";
+            return module.get.type() === "video";
           },
         },
 
@@ -11832,25 +11831,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -12037,9 +12036,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -12052,7 +12051,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       requestAnimationFrame =
         window.requestAnimationFrame ||
@@ -12242,7 +12241,7 @@ import $ from "jquery";
             module.verbose("Creating unique id for element", id);
           },
           innerDimmer: function () {
-            if ($module.find(selector.dimmer).length == 0) {
+            if ($module.find(selector.dimmer).length === 0) {
               $module.prepend('<div class="ui inverted dimmer"></div>');
             }
           },
@@ -12444,7 +12443,7 @@ import $ from "jquery";
           keyboard: function (event) {
             var keyCode = event.which,
               escapeKey = 27;
-            if (keyCode == escapeKey) {
+            if (keyCode === escapeKey) {
               if (settings.closable) {
                 module.debug("Escape key pressed hiding modal");
                 if ($module.hasClass(className.front)) {
@@ -12804,7 +12803,7 @@ import $ from "jquery";
               height: modalHeight + settings.offset,
               scrollHeight: scrollHeight + settings.offset,
               contextHeight:
-                settings.context == "body"
+                settings.context === "body"
                   ? $(window).height()
                   : $dimmable.height(),
             });
@@ -12937,7 +12936,7 @@ import $ from "jquery";
             return module.cache.isFirefox;
           },
           iframe: function () {
-            return !(this === top);
+            return !(this === null);
           },
         },
 
@@ -13220,25 +13219,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -13553,9 +13552,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -13565,7 +13564,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -13821,8 +13820,8 @@ import $ from "jquery";
               }
             }
             if (
-              storedValue == "undefined" ||
-              storedValue == "null" ||
+              storedValue === "undefined" ||
+              storedValue === "null" ||
               storedValue === undefined ||
               storedValue === null
             ) {
@@ -13960,25 +13959,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -14121,9 +14120,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -14138,7 +14137,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -14298,7 +14297,7 @@ import $ from "jquery";
             [].forEach.call(mutations, function (mutation) {
               if (mutation.removedNodes) {
                 [].forEach.call(mutation.removedNodes, function (node) {
-                  if (node == element || $(node).find(element).length > 0) {
+                  if (node === element || $(node).find(element).length > 0) {
                     module.debug(
                       "Element removed from DOM, tearing down events"
                     );
@@ -14584,7 +14583,7 @@ import $ from "jquery";
           calculations: function () {
             var $popupOffsetParent = module.get.offsetParent($popup),
               targetElement = $target[0],
-              isWindow = $boundary[0] == window,
+              isWindow = $boundary[0] === window,
               targetOffset = $target.offset(),
               parentOffset =
                 settings.inline || (settings.popup && settings.movePopup)
@@ -14686,9 +14685,9 @@ import $ from "jquery";
             return id;
           },
           startEvent: function () {
-            if (settings.on == "hover") {
+            if (settings.on === "hover") {
               return "mouseenter";
-            } else if (settings.on == "focus") {
+            } else if (settings.on === "focus") {
               return "focus";
             }
             return false;
@@ -14697,9 +14696,9 @@ import $ from "jquery";
             return "scroll";
           },
           endEvent: function () {
-            if (settings.on == "hover") {
+            if (settings.on === "hover") {
               return "mouseleave";
-            } else if (settings.on == "focus") {
+            } else if (settings.on === "focus") {
               return "blur";
             }
             return false;
@@ -14785,7 +14784,7 @@ import $ from "jquery";
                 "left center": "top left",
               },
               adjacentsAvailable =
-                verticalPosition == "top" || verticalPosition == "bottom",
+                verticalPosition === "top" || verticalPosition === "bottom",
               oppositeTried = false,
               adjacentTried = false,
               nextPosition = false;
@@ -14849,11 +14848,11 @@ import $ from "jquery";
               module.verbose(
                 "Adjusting offset to center arrow on small target element"
               );
-              if (position == "top left" || position == "bottom left") {
+              if (position === "top left" || position === "bottom left") {
                 offset += target.width / 2;
                 offset -= settings.arrowPixelsFromEdge;
               }
-              if (position == "top right" || position == "bottom right") {
+              if (position === "top right" || position === "bottom right") {
                 offset -= target.width / 2;
                 offset += settings.arrowPixelsFromEdge;
               }
@@ -14870,13 +14869,13 @@ import $ from "jquery";
 
             if (settings.inline) {
               module.debug("Adding margin to calculation", target.margin);
-              if (position == "left center" || position == "right center") {
+              if (position === "left center" || position === "right center") {
                 offset += target.margin.top;
                 distanceAway += -target.margin.left;
               } else if (
-                position == "top left" ||
-                position == "top center" ||
-                position == "top right"
+                position === "top left" ||
+                position === "top center" ||
+                position === "top right"
               ) {
                 offset += target.margin.left;
                 distanceAway -= target.margin.top;
@@ -14894,14 +14893,14 @@ import $ from "jquery";
 
             if (module.is.rtl()) {
               position = position.replace(/left|right/g, function (match) {
-                return match == "left" ? "right" : "left";
+                return match === "left" ? "right" : "left";
               });
               module.debug("RTL: Popup position updated", position);
             }
 
             // if last attempt use specified last resort position
             if (
-              searchDepth == settings.maxSearchDepth &&
+              searchDepth === settings.maxSearchDepth &&
               typeof settings.lastResort === "string"
             ) {
               position = settings.lastResort;
@@ -15082,10 +15081,10 @@ import $ from "jquery";
         bind: {
           events: function () {
             module.debug("Binding popup events to module");
-            if (settings.on == "click") {
+            if (settings.on === "click") {
               $module.on(clickEvent + eventNamespace, module.toggle);
             }
-            if (settings.on == "hover") {
+            if (settings.on === "hover") {
               $module.on(
                 "touchstart" + eventNamespace,
                 module.event.touchstart
@@ -15115,13 +15114,13 @@ import $ from "jquery";
           close: function () {
             if (
               settings.hideOnScroll === true ||
-              (settings.hideOnScroll == "auto" && settings.on != "click")
+              (settings.hideOnScroll === "auto" && settings.on != "click")
             ) {
               module.bind.closeOnScroll();
             }
             if (module.is.closable()) {
               module.bind.clickaway();
-            } else if (settings.on == "hover" && openedWithTouch) {
+            } else if (settings.on === "hover" && openedWithTouch) {
               module.bind.touchClose();
             }
           },
@@ -15176,8 +15175,8 @@ import $ from "jquery";
 
         is: {
           closable: function () {
-            if (settings.closable == "auto") {
-              if (settings.on == "hover") {
+            if (settings.closable === "auto") {
+              if (settings.on === "hover") {
                 return false;
               }
               return true;
@@ -15366,25 +15365,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -15647,9 +15646,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -15659,7 +15658,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -15731,7 +15730,7 @@ import $ from "jquery";
               ? element
               : !isNaN(element)
               ? [element]
-              : typeof element == "string"
+              : typeof element === "string"
               ? element.split(",")
               : [];
           },
@@ -15926,7 +15925,7 @@ import $ from "jquery";
           },
 
           updateInterval: function () {
-            if (settings.updateInterval == "auto") {
+            if (settings.updateInterval === "auto") {
               return settings.duration;
             }
             return settings.updateInterval;
@@ -16080,7 +16079,7 @@ import $ from "jquery";
                 if (isMultiple && allZero) {
                   $bar.css("background", "transparent");
                 }
-                if (firstNonZeroIndex == -1) {
+                if (firstNonZeroIndex === -1) {
                   firstNonZeroIndex = index;
                 }
                 lastNonZeroIndex = index;
@@ -16094,17 +16093,18 @@ import $ from "jquery";
             values.forEach(function (_, index) {
               var $bar = $($bars[index]);
               $bar.css({
-                borderTopLeftRadius: index == firstNonZeroIndex ? "" : 0,
-                borderBottomLeftRadius: index == firstNonZeroIndex ? "" : 0,
-                borderTopRightRadius: index == lastNonZeroIndex ? "" : 0,
-                borderBottomRightRadius: index == lastNonZeroIndex ? "" : 0,
+                borderTopLeftRadius: index === firstNonZeroIndex ? "" : 0,
+                borderBottomLeftRadius: index === firstNonZeroIndex ? "" : 0,
+                borderTopRightRadius: index === lastNonZeroIndex ? "" : 0,
+                borderBottomRightRadius: index === lastNonZeroIndex ? "" : 0,
               });
             });
             $module.attr("data-percent", percents);
           },
           duration: function (duration) {
             duration = duration || settings.duration;
-            duration = typeof duration == "number" ? duration + "ms" : duration;
+            duration =
+              typeof duration === "number" ? duration + "ms" : duration;
             module.verbose(
               "Setting progress bar transition duration",
               duration
@@ -16118,7 +16118,7 @@ import $ from "jquery";
               .forceArray(percents)
               .map(function (percent) {
                 percent =
-                  typeof percent == "string"
+                  typeof percent === "string"
                     ? +percent.replace("%", "")
                     : percent;
                 return settings.limitValues
@@ -16247,10 +16247,10 @@ import $ from "jquery";
               var $progress = $(element);
               if (text !== undefined) {
                 $progress.text(module.get.text(text, index));
-              } else if (settings.label == "ratio" && module.has.total()) {
+              } else if (settings.label === "ratio" && module.has.total()) {
                 module.verbose("Adding ratio to bar label");
                 $progress.text(module.get.text(settings.text.ratio, index));
-              } else if (settings.label == "percent") {
+              } else if (settings.label === "percent") {
                 module.verbose("Adding percentage to bar label");
                 $progress.text(module.get.text(settings.text.percent, index));
               }
@@ -16545,25 +16545,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -16702,12 +16702,10 @@ import $ from "jquery";
  */
 
 (function ($, window, document, undefined) {
-  "use strict";
-
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -16718,7 +16716,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       alphabet = [
         "A",
@@ -16836,7 +16834,7 @@ import $ from "jquery";
             if ($module.attr("tabindex") === undefined) {
               $module.attr("tabindex", 0);
             }
-            if ($module.find(".inner").length == 0) {
+            if ($module.find(".inner").length === 0) {
               $module.append(
                 "<div class='inner'>" +
                   "<div class='track'></div>" +
@@ -16849,7 +16847,7 @@ import $ from "jquery";
             $thumb = $module.find(".thumb:not(.second)");
             $currThumb = $thumb;
             if (module.is.range()) {
-              if ($module.find(".thumb.second").length == 0) {
+              if ($module.find(".thumb.second").length === 0) {
                 $module
                   .find(".inner")
                   .append("<div class='thumb second'></div>");
@@ -17062,7 +17060,7 @@ import $ from "jquery";
                 newPos = module.determine.pos(eventPos);
               $currThumb = initialPosition > newPos ? $thumb : $secondThumb;
             }
-            if (module.get.step() == 0 || module.is.smooth()) {
+            if (module.get.step() === 0 || module.is.smooth()) {
               var thumbVal = module.thumbVal,
                 secondThumbVal = module.secondThumbVal,
                 thumbSmoothVal = module.determine.smoothValueFromEvent(event);
@@ -17172,7 +17170,7 @@ import $ from "jquery";
           module.verbose("Taking a step");
           if (step > 0) {
             module.set.value(currValue + step * multiplier);
-          } else if (step == 0) {
+          } else if (step === 0) {
             var precision = module.get.precision(),
               newValue = currValue + multiplier / precision;
             module.set.value(Math.round(newValue * precision) / precision);
@@ -17186,7 +17184,7 @@ import $ from "jquery";
           module.verbose("Going back a step");
           if (step > 0) {
             module.set.value(currValue - step * multiplier);
-          } else if (step == 0) {
+          } else if (step === 0) {
             var precision = module.get.precision(),
               newValue = currValue - multiplier / precision;
             module.set.value(Math.round(newValue * precision) / precision);
@@ -17288,7 +17286,7 @@ import $ from "jquery";
               step = module.get.step();
             if (step != 0) {
               var split = String(step).split(".");
-              if (split.length == 2) {
+              if (split.length === 2) {
                 decimalPlaces = split[1].length;
               } else {
                 decimalPlaces = 0;
@@ -17469,7 +17467,7 @@ import $ from "jquery";
               step = module.get.step(),
               position = Math.round(ratio * trackLength),
               adjustedPos =
-                step == 0 ? position : Math.round(position / step) * step;
+                step === 0 ? position : Math.round(position / step) * step;
             return adjustedPos;
           },
           valueFromEvent: function (event) {
@@ -17536,7 +17534,7 @@ import $ from "jquery";
               range = module.get.max() - module.get.min(),
               step = module.get.step(),
               value = ratio * range,
-              difference = step == 0 ? value : Math.round(value / step) * step;
+              difference = step === 0 ? value : Math.round(value / step) * step;
             module.verbose(
               "Determined value based upon position: " +
                 position +
@@ -17576,13 +17574,13 @@ import $ from "jquery";
                   ? keys.leftArrow
                   : keys.rightArrow
                 : keys.rightArrow;
-            if (key == downArrow || key == leftArrow) {
+            if (key === downArrow || key === leftArrow) {
               return SINGLE_BACKSTEP;
-            } else if (key == upArrow || key == rightArrow) {
+            } else if (key === upArrow || key === rightArrow) {
               return SINGLE_STEP;
-            } else if (key == keys.pageDown) {
+            } else if (key === keys.pageDown) {
               return BIG_BACKSTEP;
-            } else if (key == keys.pageUp) {
+            } else if (key === keys.pageUp) {
               return BIG_STEP;
             } else {
               return NO_STEP;
@@ -18001,25 +17999,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -18150,9 +18148,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -18162,7 +18160,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -18248,10 +18246,10 @@ import $ from "jquery";
               currentRating = module.get.rating(),
               rating = $icon.index($activeIcon) + 1,
               canClear =
-                settings.clearable == "auto"
+                settings.clearable === "auto"
                   ? $icon.length === 1
                   : settings.clearable;
-            if (canClear && currentRating == rating) {
+            if (canClear && currentRating === rating) {
               module.clearRating();
             } else {
               module.set.rating(rating);
@@ -18506,25 +18504,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -18645,9 +18643,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -18657,7 +18655,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $(this).each(function () {
@@ -18874,7 +18872,7 @@ import $ from "jquery";
               if (href) {
                 event.preventDefault();
                 module.verbose("Opening search link found in result", $link);
-                if (target == "_blank" || event.ctrlKey) {
+                if (target === "_blank" || event.ctrlKey) {
                   window.open(href);
                 } else {
                   window.location.href = href;
@@ -18918,13 +18916,13 @@ import $ from "jquery";
             },
             newIndex;
           // search shortcuts
-          if (keyCode == keys.escape) {
+          if (keyCode === keys.escape) {
             module.verbose("Escape key pressed, blurring search field");
             module.hideResults();
             resultsDismissed = true;
           }
           if (module.is.visible()) {
-            if (keyCode == keys.enter) {
+            if (keyCode === keys.enter) {
               module.verbose("Enter key pressed, selecting active result");
               if ($result.filter("." + className.active).length > 0) {
                 module.event.result.click.call(
@@ -18934,7 +18932,7 @@ import $ from "jquery";
                 event.preventDefault();
                 return false;
               }
-            } else if (keyCode == keys.upArrow && hasActiveResult) {
+            } else if (keyCode === keys.upArrow && hasActiveResult) {
               module.verbose("Up key pressed, changing active result");
               newIndex = currentIndex - 1 < 0 ? currentIndex : currentIndex - 1;
               $category.removeClass(className.active);
@@ -18946,7 +18944,7 @@ import $ from "jquery";
                 .addClass(className.active);
               module.ensureVisible($result.eq(newIndex));
               event.preventDefault();
-            } else if (keyCode == keys.downArrow) {
+            } else if (keyCode === keys.downArrow) {
               module.verbose("Down key pressed, changing active result");
               newIndex =
                 currentIndex + 1 >= resultSize
@@ -18964,7 +18962,7 @@ import $ from "jquery";
             }
           } else {
             // query shortcuts
-            if (keyCode == keys.enter) {
+            if (keyCode === keys.enter) {
               module.verbose("Enter key pressed, executing query");
               module.query();
               module.set.buttonPressed();
@@ -19122,7 +19120,7 @@ import $ from "jquery";
           },
           type: function (type) {
             type = type || settings.type;
-            if (settings.type == "category") {
+            if (settings.type === "category") {
               $module.addClass(settings.type);
             }
           },
@@ -19192,7 +19190,7 @@ import $ from "jquery";
               module.debug("Using specified max results", results);
               results = results.slice(0, settings.maxResults);
             }
-            if (settings.type == "category") {
+            if (settings.type === "category") {
               results = module.create.categoryResults(results);
             }
             searchHTML = module.generateResults({
@@ -19223,9 +19221,9 @@ import $ from "jquery";
               matchRegExp = new RegExp(regExp.beginsWith + searchExp, "i"),
               // avoid duplicates when pushing results
               addResult = function (array, result) {
-                var notResult = $.inArray(result, results) == -1,
-                  notFuzzyResult = $.inArray(result, fuzzyResults) == -1,
-                  notExactResults = $.inArray(result, exactResults) == -1;
+                var notResult = $.inArray(result, results) === -1,
+                  notFuzzyResult = $.inArray(result, fuzzyResults) === -1,
+                  notExactResults = $.inArray(result, exactResults) === -1;
                 if (notResult && notFuzzyResult && notExactResults) {
                   array.push(result);
                 }
@@ -19248,8 +19246,8 @@ import $ from "jquery";
             $.each(searchFields, function (index, field) {
               $.each(source, function (label, content) {
                 var fieldExists =
-                  typeof content[field] == "string" ||
-                  typeof content[field] == "number";
+                  typeof content[field] === "string" ||
+                  typeof content[field] === "number";
                 if (fieldExists) {
                   var text;
                   if (typeof content[field] === "string") {
@@ -19267,7 +19265,7 @@ import $ from "jquery";
                     // content fuzzy matches (last in results)
                     addResult(exactResults, content);
                   } else if (
-                    settings.fullTextSearch == true &&
+                    settings.fullTextSearch === true &&
                     module.fuzzySearch(searchTerm, text)
                   ) {
                     // content fuzzy matches (last in results)
@@ -19361,7 +19359,7 @@ import $ from "jquery";
               return false;
             }
             var html = $results.html();
-            return html != "";
+            return html !== "";
           },
         },
 
@@ -19387,7 +19385,7 @@ import $ from "jquery";
                 "Checking cache for generated html for query",
                 name
               );
-              return typeof cache == "object" && cache[name] !== undefined
+              return typeof cache === "object" && cache[name] !== undefined
                 ? cache[name]
                 : false;
             }
@@ -19601,7 +19599,7 @@ import $ from "jquery";
           if (isProperObject || isProperArray) {
             if (settings.maxResults > 0) {
               if (isProperObject) {
-                if (settings.type == "standard") {
+                if (settings.type === "standard") {
                   module.error(error.maxResults);
                 }
               } else {
@@ -19752,25 +19750,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -20172,9 +20170,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -20183,7 +20181,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       requestAnimationFrame =
         window.requestAnimationFrame ||
@@ -20311,7 +20309,7 @@ import $ from "jquery";
 
         is: {
           complete: function () {
-            return $side.filter("." + className.active)[0] == $nextSide[0];
+            return $side.filter("." + className.active)[0] === $nextSide[0];
           },
           animating: function () {
             return $module.hasClass(className.animating);
@@ -20335,7 +20333,8 @@ import $ from "jquery";
 
           duration: function (duration) {
             duration = duration || settings.duration;
-            duration = typeof duration == "number" ? duration + "ms" : duration;
+            duration =
+              typeof duration === "number" ? duration + "ms" : duration;
             module.verbose("Setting animation duration", duration);
             if (settings.duration || settings.duration === 0) {
               $sides.add($side).css({
@@ -20837,25 +20836,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -20983,9 +20982,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -20999,7 +20998,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       requestAnimationFrame =
         window.requestAnimationFrame ||
@@ -21197,7 +21196,7 @@ import $ from "jquery";
                 distance[direction] +
                 "px, 0, 0);" +
                 " }";
-            } else if (direction === "top" || direction == "bottom") {
+            } else if (direction === "top" || direction === "bottom") {
               style +=
                 "" +
                 " .ui.visible." +
@@ -21232,7 +21231,7 @@ import $ from "jquery";
                   distance[direction] +
                   "px, 0, 0);" +
                   " }";
-              } else if (direction === "top" || direction == "bottom") {
+              } else if (direction === "top" || direction === "bottom") {
                 style +=
                   "" +
                   " body.pushable > .ui.visible." +
@@ -21345,7 +21344,7 @@ import $ from "jquery";
               module.debug("Other sidebars currently visible");
               if (settings.exclusive) {
                 // if not overlay queue animation after hide
-                if (settings.transition != "overlay") {
+                if (settings.transition !== "overlay") {
                   module.hideOthers(module.show);
                   return;
                 } else {
@@ -21403,7 +21402,7 @@ import $ from "jquery";
           callback = callback || function () {};
           $otherSidebars.sidebar("hide", function () {
             callbackCount++;
-            if (callbackCount == sidebarCount) {
+            if (callbackCount === sidebarCount) {
               callback();
             }
           });
@@ -21428,7 +21427,7 @@ import $ from "jquery";
             dim,
             transitionEnd;
           callback = $.isFunction(callback) ? callback : function () {};
-          if (settings.transition == "scale down") {
+          if (settings.transition === "scale down") {
             module.scrollToTop();
           }
           module.set.transition(transition);
@@ -21443,7 +21442,7 @@ import $ from "jquery";
             module.set.dimmed();
           };
           transitionEnd = function (event) {
-            if (event.target == $transition[0]) {
+            if (event.target === $transition[0]) {
               $transition.off(
                 transitionEvent + elementNamespace,
                 transitionEnd
@@ -21464,7 +21463,7 @@ import $ from "jquery";
         pullPage: function (callback) {
           var transition = module.get.transition(),
             $transition =
-              transition == "overlay" || module.othersActive()
+              transition === "overlay" || module.othersActive()
                 ? $module
                 : $pusher,
             animate,
@@ -21484,7 +21483,7 @@ import $ from "jquery";
             }
           };
           transitionEnd = function (event) {
-            if (event.target == $transition[0]) {
+            if (event.target === $transition[0]) {
               $transition.off(
                 transitionEvent + elementNamespace,
                 transitionEnd
@@ -21493,7 +21492,7 @@ import $ from "jquery";
               module.remove.transition();
               module.remove.inlineCSS();
               if (
-                transition == "scale down" ||
+                transition === "scale down" ||
                 (settings.returnScroll && module.is.mobile())
               ) {
                 module.scrollBack();
@@ -21626,10 +21625,10 @@ import $ from "jquery";
             var direction = module.get.direction(),
               transition;
             transition = module.is.mobile()
-              ? settings.mobileTransition == "auto"
+              ? settings.mobileTransition === "auto"
                 ? settings.defaultTransition.mobile[direction]
                 : settings.mobileTransition
-              : settings.transition == "auto"
+              : settings.transition === "auto"
               ? settings.defaultTransition.computer[direction]
               : settings.transition;
             module.verbose("Determined transition", transition);
@@ -21833,25 +21832,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -21997,9 +21996,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -22009,7 +22008,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -22163,7 +22162,7 @@ import $ from "jquery";
             [].forEach.call(mutations, function (mutation) {
               if (mutation.removedNodes) {
                 [].forEach.call(mutation.removedNodes, function (node) {
-                  if (node == element || $(node).find(element).length > 0) {
+                  if (node === element || $(node).find(element).length > 0) {
                     module.debug(
                       "Element removed from DOM, tearing down events"
                     );
@@ -22255,7 +22254,7 @@ import $ from "jquery";
             }
             module.cache = {
               fits: element.height + settings.offset <= scrollContext.height,
-              sameHeight: element.height == context.height,
+              sameHeight: element.height === context.height,
               scrollContext: {
                 height: scrollContext.height,
               },
@@ -22348,7 +22347,7 @@ import $ from "jquery";
           },
           containerSize: function () {
             var tagName = $container.get(0).tagName;
-            if (tagName === "HTML" || tagName == "body") {
+            if (tagName === "HTML" || tagName === "body") {
               // this can trigger for too many reasons
               //module.error(error.container, tagName, $module);
               module.determineContainer();
@@ -22374,7 +22373,7 @@ import $ from "jquery";
           },
           scroll: function (scroll) {
             module.debug("Setting scroll on element", scroll);
-            if (module.elementScroll == scroll) {
+            if (module.elementScroll === scroll) {
               return;
             }
             if (module.is.top()) {
@@ -22405,7 +22404,7 @@ import $ from "jquery";
 
         is: {
           standardScroll: function () {
-            return $scroll[0] == window;
+            return $scroll[0] === window;
           },
           top: function () {
             return $module.hasClass(className.top);
@@ -22776,25 +22775,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -22930,9 +22929,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -22943,7 +22942,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       initializedHistory = false,
       returnedValue;
@@ -22993,7 +22992,7 @@ import $ from "jquery";
           if (
             settings.autoTabActivation &&
             instance === undefined &&
-            module.determine.activeTab() == null
+            module.determine.activeTab() === null
           ) {
             module.debug(
               "No active tab detected, setting first tab active",
@@ -23100,7 +23099,7 @@ import $ from "jquery";
             module.error(error.state);
             return false;
           } else {
-            if (settings.historyType == "state") {
+            if (settings.historyType === "state") {
               module.debug("Using HTML5 to manage state");
               if (settings.path !== false) {
                 $.address.history(true).state(settings.path);
@@ -23180,7 +23179,7 @@ import $ from "jquery";
         set: {
           auto: function () {
             var url =
-              typeof settings.path == "string"
+              typeof settings.path === "string"
                 ? settings.path.replace(/\/$/, "") + "/{$tab}"
                 : "/{$tab}";
             module.verbose(
@@ -23230,7 +23229,7 @@ import $ from "jquery";
             var currentPathArray = pathArray.slice(0, index + 1),
               currentPath = module.utilities.arrayToPath(currentPathArray),
               isTab = module.is.tab(currentPath),
-              isLastIndex = index + 1 == pathArray.length,
+              isLastIndex = index + 1 === pathArray.length,
               $tab = module.get.tabElement(currentPath),
               $anchor,
               nextPathArray,
@@ -23302,7 +23301,7 @@ import $ from "jquery";
                   historyEvent
                 );
               }
-            } else if (tabPath.search("/") == -1 && tabPath !== "") {
+            } else if (tabPath.search("/") === -1 && tabPath !== "") {
               // look for in page anchor
               tabPath = module.escape.string(tabPath);
               $anchor = $("#" + tabPath + ', a[name="' + tabPath + '"]');
@@ -23368,8 +23367,8 @@ import $ from "jquery";
                 ? evaluateScripts
                 : settings.evaluateScripts;
             if (
-              typeof settings.cacheType == "string" &&
-              settings.cacheType.toLowerCase() == "dom" &&
+              typeof settings.cacheType === "string" &&
+              settings.cacheType.toLowerCase() === "dom" &&
               typeof html !== "string"
             ) {
               $tab.empty().append($(html).clone(true));
@@ -23401,11 +23400,11 @@ import $ from "jquery";
                   "X-Remote": true,
                 },
                 onSuccess: function (response) {
-                  if (settings.cacheType == "response") {
+                  if (settings.cacheType === "response") {
                     module.cache.add(fullTabPath, response);
                   }
                   module.update.content(tabPath, response);
-                  if (tabPath == activeTabPath) {
+                  if (tabPath === activeTabPath) {
                     module.debug("Content loaded", tabPath);
                     module.activate.tab(tabPath);
                   } else {
@@ -23427,8 +23426,8 @@ import $ from "jquery";
                   if (settings.loadOnce) {
                     module.cache.add(fullTabPath, true);
                   } else if (
-                    typeof settings.cacheType == "string" &&
-                    settings.cacheType.toLowerCase() == "dom" &&
+                    typeof settings.cacheType === "string" &&
+                    settings.cacheType.toLowerCase() === "dom" &&
                     $tab.children().length > 0
                   ) {
                     setTimeout(function () {
@@ -23456,7 +23455,7 @@ import $ from "jquery";
               module.activate.tab(tabPath);
               module.debug("Adding cached content", fullTabPath);
               if (!settings.loadOnce) {
-                if (settings.evaluateScripts == "once") {
+                if (settings.evaluateScripts === "once") {
                   module.update.content(tabPath, cachedContent, false);
                 } else {
                   module.update.content(tabPath, cachedContent);
@@ -23499,7 +23498,7 @@ import $ from "jquery";
           tab: function (tabPath) {
             var $tab = module.get.tabElement(tabPath),
               $deactiveTabs =
-                settings.deactivate == "siblings"
+                settings.deactivate === "siblings"
                   ? $tab.siblings($tabs)
                   : $tabs.not($tab),
               isActive = $tab.hasClass(className.active);
@@ -23517,7 +23516,7 @@ import $ from "jquery";
           navigation: function (tabPath) {
             var $navigation = module.get.navElement(tabPath),
               $deactiveNavigation =
-                settings.deactivate == "siblings"
+                settings.deactivate === "siblings"
                   ? $navigation.siblings($allModules)
                   : $allModules.not($navigation),
               isActive = $navigation.hasClass(className.active);
@@ -23661,7 +23660,7 @@ import $ from "jquery";
         utilities: {
           filterArray: function (keepArray, removeArray) {
             return $.grep(keepArray, function (keepValue) {
-              return $.inArray(keepValue, removeArray) == -1;
+              return $.inArray(keepValue, removeArray) === -1;
             });
           },
           last: function (array) {
@@ -23671,7 +23670,7 @@ import $ from "jquery";
             if (pathName === undefined) {
               pathName = activeTabPath;
             }
-            return typeof pathName == "string"
+            return typeof pathName === "string"
               ? pathName.split("/")
               : [pathName];
           },
@@ -23800,25 +23799,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -23958,9 +23957,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -23970,7 +23969,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -24756,25 +24755,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -24977,9 +24976,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -25087,9 +25086,9 @@ import $ from "jquery";
           }
           interval = interval !== undefined ? interval : settings.interval;
           shouldReverse =
-            settings.reverse == "auto" && direction == className.outward;
+            settings.reverse === "auto" && direction === className.outward;
           delay =
-            shouldReverse || settings.reverse == true
+            shouldReverse || settings.reverse === true
               ? ($allModules.length - index) * settings.interval
               : index * settings.interval;
           module.debug("Delaying animation by", delay);
@@ -25258,7 +25257,8 @@ import $ from "jquery";
           },
           duration: function (animationName, duration) {
             duration = duration || settings.duration;
-            duration = typeof duration == "number" ? duration + "ms" : duration;
+            duration =
+              typeof duration === "number" ? duration + "ms" : duration;
             if (duration || duration === 0) {
               module.verbose("Setting animation duration", duration);
               $module.css({
@@ -25268,7 +25268,7 @@ import $ from "jquery";
           },
           direction: function (direction) {
             direction = direction || module.get.direction();
-            if (direction == className.inward) {
+            if (direction === className.inward) {
               module.set.inward();
             } else {
               module.set.outward();
@@ -25405,11 +25405,11 @@ import $ from "jquery";
         get: {
           settings: function (animation, duration, onComplete) {
             // single settings object
-            if (typeof animation == "object") {
+            if (typeof animation === "object") {
               return $.extend(true, {}, $.fn.transition.settings, animation);
             }
             // all arguments provided
-            else if (typeof onComplete == "function") {
+            else if (typeof onComplete === "function") {
               return $.extend({}, $.fn.transition.settings, {
                 animation: animation,
                 onComplete: onComplete,
@@ -25418,8 +25418,8 @@ import $ from "jquery";
             }
             // only duration provided
             else if (
-              typeof duration == "string" ||
-              typeof duration == "number"
+              typeof duration === "string" ||
+              typeof duration === "number"
             ) {
               return $.extend({}, $.fn.transition.settings, {
                 animation: animation,
@@ -25427,13 +25427,13 @@ import $ from "jquery";
               });
             }
             // duration is actually settings object
-            else if (typeof duration == "object") {
+            else if (typeof duration === "object") {
               return $.extend({}, $.fn.transition.settings, duration, {
                 animation: animation,
               });
             }
             // duration is actually callback
-            else if (typeof duration == "function") {
+            else if (typeof duration === "function") {
               return $.extend({}, $.fn.transition.settings, {
                 animation: animation,
                 onComplete: duration,
@@ -25608,10 +25608,10 @@ import $ from "jquery";
               }
 
               $clone.remove();
-              if (currentAnimation != inAnimation) {
+              if (currentAnimation !== inAnimation) {
                 module.debug("Direction exists for animation", animation);
                 directionExists = true;
-              } else if (currentAnimation == "none" || !currentAnimation) {
+              } else if (currentAnimation === "none" || !currentAnimation) {
                 module.debug("No animation defined in css", animation);
                 return;
               } else {
@@ -25855,25 +25855,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -26006,9 +26006,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -26019,7 +26019,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
 
@@ -26078,7 +26078,7 @@ import $ from "jquery";
             if (triggerEvent) {
               module.verbose("Attaching API events to element", triggerEvent);
               $module.on(triggerEvent + eventNamespace, module.event.trigger);
-            } else if (settings.on == "now") {
+            } else if (settings.on === "now") {
               module.debug("Querying API endpoint immediately");
               module.query();
             }
@@ -26087,7 +26087,7 @@ import $ from "jquery";
 
         decode: {
           json: function (response) {
-            if (response !== undefined && typeof response == "string") {
+            if (response !== undefined && typeof response === "string") {
               try {
                 response = JSON.parse(response);
               } catch (e) {
@@ -26267,7 +26267,9 @@ import $ from "jquery";
             return $module.is("input");
           },
           loading: function () {
-            return module.request ? module.request.state() == "pending" : false;
+            return module.request
+              ? module.request.state() === "pending"
+              : false;
           },
           abortedRequest: function (xhr) {
             if (xhr && xhr.readyState !== undefined && xhr.readyState === 0) {
@@ -26316,16 +26318,16 @@ import $ from "jquery";
             return module.was.successful();
           },
           successful: function () {
-            return module.request && module.request.state() == "resolved";
+            return module.request && module.request.state() === "resolved";
           },
           failure: function () {
-            return module.request && module.request.state() == "rejected";
+            return module.request && module.request.state() === "rejected";
           },
           complete: function () {
             return (
               module.request &&
-              (module.request.state() == "resolved" ||
-                module.request.state() == "rejected")
+              (module.request.state() === "resolved" ||
+                module.request.state() === "rejected")
             );
           },
         },
@@ -26459,7 +26461,7 @@ import $ from "jquery";
         event: {
           trigger: function (event) {
             module.query();
-            if (event.type == "submit" || event.type == "click") {
+            if (event.type === "submit" || event.type === "click") {
               event.preventDefault();
             }
           },
@@ -26562,7 +26564,7 @@ import $ from "jquery";
                   status,
                   httpMessage
                 );
-              if (status == "aborted") {
+              if (status === "aborted") {
                 module.debug(
                   "XHR Aborted (Most likely caused by page navigation or CORS Policy)",
                   status,
@@ -26570,12 +26572,12 @@ import $ from "jquery";
                 );
                 settings.onAbort.call(context, status, $module, xhr);
                 return true;
-              } else if (status == "invalid") {
+              } else if (status === "invalid") {
                 module.debug(
                   "JSON did not pass success test. A server-side error has most likely occurred",
                   response
                 );
-              } else if (status == "error") {
+              } else if (status === "error") {
                 if (xhr !== undefined) {
                   module.debug(
                     "XHR produced a server error",
@@ -26794,10 +26796,10 @@ import $ from "jquery";
             return data;
           },
           event: function () {
-            if ($.isWindow(element) || settings.on == "now") {
+            if ($.isWindow(element) || settings.on === "now") {
               module.debug("API called without element, no events attached");
               return false;
-            } else if (settings.on == "auto") {
+            } else if (settings.on === "auto") {
               if ($module.is("input")) {
                 return element.oninput !== undefined
                   ? "input"
@@ -26980,25 +26982,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -27197,8 +27199,6 @@ import $ from "jquery";
  */
 
 (function ($, window, document, undefined) {
-  "use strict";
-
   $.isFunction =
     $.isFunction ||
     function (obj) {
@@ -27206,9 +27206,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -27218,7 +27218,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue;
     $allModules.each(function () {
@@ -27412,7 +27412,7 @@ import $ from "jquery";
               module.update.text(text.loading);
             }
             $.when(apiRequest).then(function () {
-              if (apiRequest.state() == "resolved") {
+              if (apiRequest.state() === "resolved") {
                 module.debug("API request succeeded");
                 settings.activateTest = function () {
                   return true;
@@ -27691,25 +27691,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];
@@ -27883,9 +27883,9 @@ import $ from "jquery";
     };
 
   window =
-    typeof window != "undefined" && window.Math == Math
+    typeof window != "undefined" && window.Math === Math
       ? window
-      : typeof this != "undefined" && this.Math == Math
+      : typeof this != "undefined" && this.Math === Math
       ? this
       : Function("return this")();
 
@@ -27895,7 +27895,7 @@ import $ from "jquery";
       time = new Date().getTime(),
       performance = [],
       query = arguments[0],
-      methodInvoked = typeof query == "string",
+      methodInvoked = typeof query === "string",
       queryArguments = [].slice.call(arguments, 1),
       returnedValue,
       moduleCount = $allModules.length,
@@ -27936,10 +27936,10 @@ import $ from "jquery";
           module.setup.cache();
 
           if (module.should.trackChanges()) {
-            if (settings.type == "image") {
+            if (settings.type === "image") {
               module.setup.image();
             }
-            if (settings.type == "fixed") {
+            if (settings.type === "fixed") {
               module.setup.fixed();
             }
 
@@ -27980,7 +27980,7 @@ import $ from "jquery";
           $context
             .off("scroll" + eventNamespace, module.event.scroll)
             .off("scrollchange" + eventNamespace, module.event.scrollchange);
-          if (settings.type == "fixed") {
+          if (settings.type === "fixed") {
             module.resetFixed();
             module.remove.placeholder();
           }
@@ -28032,7 +28032,7 @@ import $ from "jquery";
             [].forEach.call(mutations, function (mutation) {
               if (mutation.removedNodes) {
                 [].forEach.call(mutation.removedNodes, function (node) {
-                  if (node == element || $(node).find(element).length > 0) {
+                  if (node === element || $(node).find(element).length > 0) {
                     module.debug(
                       "Element removed from DOM, tearing down events"
                     );
@@ -28142,7 +28142,7 @@ import $ from "jquery";
                 module.precache(src, function () {
                   module.set.image(src, function () {
                     loadedCount++;
-                    if (loadedCount == moduleCount) {
+                    if (loadedCount === moduleCount) {
                       settings.onAllLoaded.call(this);
                     }
                     settings.onLoad.call(this);
@@ -28263,18 +28263,18 @@ import $ from "jquery";
           verticallyScrollableContext: function () {
             var overflowY =
               $context.get(0) !== window ? $context.css("overflow-y") : false;
-            return overflowY == "auto" || overflowY == "scroll";
+            return overflowY === "auto" || overflowY === "scroll";
           },
           horizontallyScrollableContext: function () {
             var overflowX =
               $context.get(0) !== window ? $context.css("overflow-x") : false;
-            return overflowX == "auto" || overflowX == "scroll";
+            return overflowX === "auto" || overflowX === "scroll";
           },
         },
 
         refresh: function () {
           module.debug("Refreshing constants (width/height)");
-          if (settings.type == "fixed") {
+          if (settings.type === "fixed") {
             module.resetFixed();
           }
           module.reset();
@@ -28945,25 +28945,25 @@ import $ from "jquery";
             response;
           passedArguments = passedArguments || queryArguments;
           context = element || context;
-          if (typeof query == "string" && object !== undefined) {
-            query = query.split(/[\. ]/);
+          if (typeof query === "string" && object !== undefined) {
+            query = query.split(/[. ]/);
             maxDepth = query.length - 1;
             $.each(query, function (depth, value) {
               var camelCaseValue =
-                depth != maxDepth
+                depth !== maxDepth
                   ? value +
                     query[depth + 1].charAt(0).toUpperCase() +
                     query[depth + 1].slice(1)
                   : query;
               if (
                 $.isPlainObject(object[camelCaseValue]) &&
-                depth != maxDepth
+                depth !== maxDepth
               ) {
                 object = object[camelCaseValue];
               } else if (object[camelCaseValue] !== undefined) {
                 found = object[camelCaseValue];
                 return false;
-              } else if ($.isPlainObject(object[value]) && depth != maxDepth) {
+              } else if ($.isPlainObject(object[value]) && depth !== maxDepth) {
                 object = object[value];
               } else if (object[value] !== undefined) {
                 found = object[value];

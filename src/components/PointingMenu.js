@@ -11,7 +11,7 @@ const PointingMenu = () => {
 
   return (
     <>
-      <div className="ui pointing menu">
+      <div className="ui pointing secondary menu">
         <a className="item active" data-tab="one">
           Home
         </a>

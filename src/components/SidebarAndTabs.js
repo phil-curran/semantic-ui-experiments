@@ -44,7 +44,7 @@ const SidebarAndTabs = (props) => {
           <div className="">
             <div className="ui basic segment">
               <h3 className="ui header">Application Content</h3>
-              <div className="ui four item menu">
+              <div className="ui four item pointing secondary menu">
                 <a className="item active" data-tab="first">
                   Home
                 </a>

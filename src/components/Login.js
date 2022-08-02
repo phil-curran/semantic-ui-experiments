@@ -3,13 +3,14 @@ import "../styles/Login.css";
 
 const Login = () => {
   $(document).ready(function () {
-    $(".item").tab();
+    $(".menu .item").tab();
   });
 
   return (
-    <div id="LoginPage" className="ui centered grid">
-      <div className="ten wide column">
+    <div id="LoginPage" className="ui four column centered grid">
+      <div className="column">
         <div className="ui segment">
+          <h2 className="ui center aligned header">QuantifiedSelf</h2>
           <div className="ui fluid two item secondary pointing menu">
             <a className="item active" data-tab="first">
               Login

@@ -83,6 +83,6 @@ const Accordion = () => {
       </div>
     </>
   );
-};
+}
 
 export default Accordion;

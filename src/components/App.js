@@ -16,44 +16,30 @@ import "../styles/App.css";
 // import Search from "./Search";
 // import Emojis from "./Emojis.js";
 // import SecondaryMenu from "./SecondaryMenu.js";
-// import PointingMenu from "./PointingMenu.js";
 // import Popup from "./Popup.js";
 // import Multiselect from "./Multiselect.js";
-// import SidebarAndTabs from "./SidebarAndTabs.js";
 // import Login from "./Login.js";
-import WeekdayModel from "./WeekdayModel.js";
+// import WeekdayModel from "./WeekdayModel.js";
 import WeekdayModelTable from "./WeekdayModelTable.js";
+// import PointingMenu from "./PointingMenu.js";
+import SleepTracker from "./SleepTracker.js";
+import SidebarAndTabs from "./SidebarAndTabs.js";
 
 function App() {
   // const [toggleBtn, setToggleBtn] = useState(true);
   // const toggle = () => setToggleBtn((val) => !val);
 
-  const first = {
-    title: "First",
-    content: "First content",
-  };
-
-  const second = {
-    title: "Second",
-    content: "Second content",
-  };
-
-  const third = {
-    title: "Third",
-    content: "Third content",
-  };
-
   return (
     <div>
       <WeekdayModelTable />
       {/* <Buttons />
-      <WeekdayModel />
-      <Sidebar />
+      <SleepTracker />
       <SidebarAndTabs />
-      <SecondaryMenu />
       <PointingMenu />
-      <Tabs first={first} second={second} third={third} />
+      <Sidebar />
       <Login />
+      <WeekdayModel />
+      <SecondaryMenu />
       <Multiselect />
       <Popup />
       <Dropdown />
